@@ -11,6 +11,13 @@ app.use(expess.urlencoded());
 app.use(userRouter);
 app.use(hostRouter);  
 
+app.use((req,res)=>{
+  res.status(404).send(`
+    <h1>404! page not found</h1>
+    <a href="/">back to home</a>
+    `);
+});
+
 
 //server setup
 const PORT=3000;
