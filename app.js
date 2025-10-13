@@ -9,7 +9,7 @@ const hostRouter = require('./routes/hostRouter');
 const app = expess();
 app.use(expess.urlencoded());
 app.use(userRouter);
-app.use(hostRouter);  
+app.use("/host",hostRouter);  
 
 app.use((req,res)=>{
   res.status(404).send(`
