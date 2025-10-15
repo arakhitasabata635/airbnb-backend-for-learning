@@ -1,21 +1,18 @@
+//core modules
+const path = require('path');
+//external modules
 const expess = require("express");
 const hostRouter = expess.Router();
 
+//local modules
+const rootDir = require('../utils/pathUtil');
+
 hostRouter.get("/add-home", (req, res) => {
-  res.send(`
-    <h1>add your home</h1>
-    <form action="/add-home" method="POST"> 
-      <input type="text" name="name" placeholder="name" />
-      <input type="submit" />
-    </form>
-    `);
+ res.sendFile(path.join( rootDir, 'views', 'addHome.html'));
 });
 hostRouter.post("/add-home", (req, res) => {
   console.log(req.body);
-  res.send(`
-    <h1>your home is added successfully</h1>
-    <a href="/">back to home</a>
-    `);
+  res.sendFile(path.join(rootDir, 'views', 'homeAdded.html'));
 });
 
 module.exports = hostRouter;
