@@ -1,18 +1,21 @@
 //core modules
-const path = require('path');
+const path = require("path");
 //external modules
-const expess = require("express");
-const hostRouter = expess.Router();
+const express = require("express");
+const hostRouter = express.Router();
 
 //local modules
-const rootDir = require('../utils/pathUtil');
+const rootDir = require("../utils/pathUtil");
+
+const registerdHomes = [];
 
 hostRouter.get("/add-home", (req, res) => {
- res.sendFile(path.join( rootDir, 'views', 'addHome.html'));
+  res.render("addHome" , { pageTitle: "add home to airbnb" });
 });
 hostRouter.post("/add-home", (req, res) => {
-  console.log(req.body);
-  res.sendFile(path.join(rootDir, 'views', 'homeAdded.html'));
+  registerdHomes.push({ houseName: req.body.houseName });
+  res.render( "homeAdded.ejs" , { pageTitle: "home added sucessfully" });
 });
 
-module.exports = hostRouter;
+exports.hostRouter = hostRouter;
+exports.registerdHomes = registerdHomes;

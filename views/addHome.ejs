@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body>
+    <%- include("partials/header") %>
+    <main
+      class="flex flex-col items-center justify-center min-h-[60vh] bg-gray-50"
+    >
+      <form
+        action="/host/add-home"
+        method="POST"
+        class="bg-white p-8 rounded-xl shadow-lg flex flex-col gap-6 w-full max-w-md"
+      >
+        <h1 class="text-2xl font-bold mb-4 text-[#ff385c] text-center">
+          Register your Home on Airbnb
+        </h1>
+        <input
+          type="text"
+          name="houseName"
+          placeholder="Enter your House Name"
+          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg"
+          required
+        />
+        <input
+          type="submit"
+          value="Register Home"
+          class="bg-[#ff385c] text-white font-bold py-3 rounded-md cursor-pointer transition-all duration-200 hover:opacity-90 hover:scale-105"
+        />
+      </form>
+    </main>
+  </body>
+</html>

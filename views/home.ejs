@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body>
+    <%- include("partials/header") %>
+<main class="p-8">
+  <h2 class="text-2xl font-bold mb-6 text-center">
+    here are our register homes:
+  </h2>
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
+    <% registerdHomes.forEach((home) => { %>
+      <li class="bg-white border border-[#ff385c] rounded-lg shadow-md h-20 w-full max-w-md flex flex-col justify-center px-6 text-black font-bold text-lg transition-opacity duration-200 hover:opacity-70">
+        <span class="text-left w-full"><%= home.houseName %></span>
+      </li>
+    <% }); %>
+  </ul>
+</main>
+  </body>
+</html>
