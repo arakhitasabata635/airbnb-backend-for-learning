@@ -7,19 +7,22 @@ const express = require('express');
 const userRouter = require('./routes/userRouters');
 const {hostRouter} = require('./routes/hostRouter');
 const rootDir = require('./utils/pathUtil');
+const errorControllers = require("./controllers/error");
 
 //app initialization
 const app = express();
+
 app.set('view engine', 'ejs');
 app.set ('views', path.join(rootDir, 'views'));
+
 app.use(express.static(path.join(rootDir, 'public')));
+
 app.use(express.urlencoded());
+
 app.use(userRouter);
 app.use("/host",hostRouter);  
 
-app.use((req,res)=>{
-  res.status(404).render('404.ejs', { pageTitle: 'Page Not Found' });
-});
+app.use(errorControllers.pageNotFound);
 
 
 //server setup
