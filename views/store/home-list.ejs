@@ -33,11 +33,18 @@
               <span class="font-semibold">Location:</span> <%= home.location %>
             </p>
             <div class="flex items-center justify-between mt-3 w-full">
-              <button
-                class="bg-[#ff385c] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
+              <div>
+                <a href="/homes/<%= home.id %>"
+                class=" bg-blue-500 mx-1 text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
+              >
+                Details
+              </a>
+                <button
+                class="bg-green-500 text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
               >
                 Book
               </button>
+              </div>
               <div class="flex items-center text-yellow-500 font-semibold">
                 <svg
                   class="w-4 h-4 inline-block mr-1"

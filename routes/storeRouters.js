@@ -9,6 +9,7 @@ storeRouters.get("/", storeControllers.getIndex);
 storeRouters.get("/homes", storeControllers.getHomes);
 storeRouters.get("/bookings", storeControllers.getBookings);
 storeRouters.get("/favourites", storeControllers.getFavouriteList);
+storeRouters.get("/homes/:homeId", storeControllers.getHomeDetails);
 
 
 module.exports = storeRouters;
