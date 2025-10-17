@@ -1,0 +1,7 @@
+{
+  "watch": ["."],
+  "ext": "js,json,ejs", 
+  "ignore": [ "node_modules/", "data/"],
+  "exec": "node --trace-warnings --inspect=0.0.0. 0 src/app.js",
+  "exec": "node app.js"
+}
