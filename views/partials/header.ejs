@@ -3,14 +3,43 @@
 >
   <a
     href="/"
+    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='index' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+  >
+    airbnb
+  </a>
+  <a
+    href="/homes"
     class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='home' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
   >
-    Home
+    Homes-List
   </a>
+
+  <a
+    href="/favourites"
+    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='favourites' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+  >
+    favourites
+  </a>
+
+  <a
+    href="/bookings"
+    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='booking' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+  >
+    Bookings
+  </a>
+
+  <a
+    href="/host/host-home-list"
+    class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='host-homes' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+  >
+    Host Homes  
+  </a>
+
   <a
     href="/host/add-home"
     class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='add-home' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
   >
     Add Home
   </a>
+
 </header>

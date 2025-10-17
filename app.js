@@ -4,7 +4,7 @@ const path = require('path');
 const express = require('express');
 
 //Local modules
-const userRouter = require('./routes/userRouters');
+const storeRouters = require('./routes/storeRouters');
 const {hostRouter} = require('./routes/hostRouter');
 const rootDir = require('./utils/pathUtil');
 const errorControllers = require("./controllers/error");
@@ -19,7 +19,7 @@ app.use(express.static(path.join(rootDir, 'public')));
 
 app.use(express.urlencoded());
 
-app.use(userRouter);
+app.use(storeRouters);
 app.use("/host",hostRouter);  
 
 app.use(errorControllers.pageNotFound);

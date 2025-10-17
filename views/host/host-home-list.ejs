@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <%- include("../partials/header") %>
+    <main
+      class="p-8 min-h-[80vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff]"
+    >
+      <h2
+        class="text-3xl font-extrabold mb-10 text-center text-[#ff385c] tracking-tight drop-shadow"
+      >
+        hey host here are your homes
+      </h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% registerdHomes.forEach((home) => { %>
+        <li
+          class="bg-white border border-[#ff385c]/30 rounded-2xl shadow-xl flex flex-col gap-4 p-5 transition-transform duration-200 hover:scale-105 hover:shadow-2xl w-full max-w-[400px] mx-auto"
+        >
+          <img
+            src="<%= home.image %>"
+            alt="<%= home.houseName %>"
+            class="w-full h-40 object-cover rounded-xl border border-[#ff385c]/20 shadow"
+          />
+          <div class="flex flex-col justify-center w-full px-2">
+            <h3 class="text-lg font-bold text-gray-800 mb-1 truncate">
+              <%= home.houseName %>
+            </h3>
+            <p class="text-[#ff385c] font-semibold mb-1">
+              ₹<%= home.price %>
+              <span class="text-gray-500 font-normal">/ night</span>
+            </p>
+            <p class="text-gray-600 mb-1">
+              <span class="font-semibold">Location:</span> <%= home.location %>
+            </p>
+            <div class="flex items-center justify-between mt-3 w-full">
+              <button
+                class="bg-[#ff385c] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
+              >
+                Book
+              </button>
+              <div class="flex items-center text-yellow-500 font-semibold">
+                <svg
+                  class="w-4 h-4 inline-block mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z"
+                  />
+                </svg>
+                <span class="text-sm"><%= home.rating %> / 5</span>
+              </div>
+            </div>
+          </div>
+        </li>
+        <% }); %>
+      </ul>
+    </main>
+  </body>
+</html>

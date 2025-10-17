@@ -11,19 +11,20 @@ exports.postAddHome = (req, res) => {
   const { houseName, price, location, rating, image } = req.body;
   const home = new Home(houseName, price, location, rating, image);
   home.save();
-
-  res.render("host/homeAdded.ejs", {
+  res.render("host/home-added.ejs", {
     pageTitle: "home added sucessfully",
     currentPage: "add-home",
   });
 };
 
-exports.getHomes = (req, res) => {
-  const registerdHomes = Home.fetchAll((registerdHomes) => {
-    res.render("store/home-list", {
+exports.getHostHomes = (req, res) => {
+   Home.fetchAll((registerdHomes) => {
+    res.render("host/host-home-list", {
       registerdHomes: registerdHomes,
-      pageTitle: "airbnb home",
-      currentPage: "home",
+      pageTitle: "Host homes list",
+      currentPage: "host-homes",
     });
   });
 };
+
+
