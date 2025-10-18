@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("../partials/head") %>
-  <body>
+  <body class="antialiased">
     <%- include("../partials/header") %>
+
     <main
-      class="p-8 min-h-[80vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff]"
+      class="py-12 px-4 bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] min-h-[70vh]"
     >
-      <h2
-        class="text-3xl font-extrabold mb-10 text-center text-[#ff385c] tracking-tight drop-shadow"
-      >
-       home details
-      </h2>
+      <div class="max-w-5xl mx-auto">
+        <!-- Card -->
+        <div
+          class="bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-3 gap-8 p-6"
+        >
+          <!-- Image -->
+          <div class="lg:col-span-1 flex items-center justify-center">
+            <img
+              src="<%= home.image %>"
+              alt="<%= home.houseName %>"
+              class="w-full h-72 lg:h-96 object-cover rounded-xl border border-[#ff385c]/20 shadow"
+            />
+          </div>
+
+          <!-- Details -->
+          <div class="lg:col-span-2 flex flex-col justify-between gap-6 p-2">
+            <div>
+              <h1
+                class="text-2xl lg:text-4xl font-extrabold text-gray-800 mb-2 leading-tight"
+              >
+                <%= home.houseName %>
+              </h1>
+
+              <p class="text-gray-600 mb-4 text-base lg:text-lg">
+                <%= home.description || "No description provided for this home."
+                %>
+              </p>
+
+              <div class="flex flex-wrap items-center gap-4 mb-4">
+                <span
+                  class="inline-flex items-center gap-2 bg-[#ff385c]/10 text-[#ff385c] px-3 py-1 rounded-full text-sm font-semibold"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M10 2a1 1 0 01.894.553l3.5 7a1 1 0 01-.036.91L12.9 14.9a1 1 0 00-.256.875l.83 4.15A1 1 0 0112.5 21h-5a1 1 0 01-.98-.784l.83-4.15a1 1 0 00-.256-.875L3.642 10.463a1 1 0 01-.036-.91l3.5-7A1 1 0 018.894 2H10z"
+                    />
+                  </svg>
+                  <span><%= home.location %></span>
+                </span>
+
+                <span class="text-gray-700 text-lg lg:text-xl font-semibold">
+                  ₹<%= home.price %>
+                  <span class="text-gray-500 font-normal">/ night</span>
+                </span>
+              </div>
+
+              <!-- Rating -->
+              <div class="flex items-center gap-2">
+                <div class="flex items-center text-yellow-400">
+                  <% const r = Math.floor(Number(home.rating) || 0); %> <%
+                  for(let i=0;i<5;i++){ %> <% if(i < r){ %>
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z"
+                    />
+                  </svg>
+                  <% } else { %>
+                  <svg
+                    class="w-5 h-5 text-gray-300"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z"
+                    />
+                  </svg>
+                  <% } %> <% } %>
+                </div>
+                <span class="text-sm text-gray-600 font-medium"
+                  ><%= home.rating %> / 5</span
+                >
+              </div>
+            </div>
+            <%- include("../partials/favourites", { home: home }) %>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 </html>
