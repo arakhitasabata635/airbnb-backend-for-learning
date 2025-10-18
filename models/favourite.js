@@ -5,20 +5,21 @@ const rootDir = require("../utils/pathUtil");
 const favouriteDataPath = path.join(rootDir, "data", "favourite.json");
 
 module.exports = class Favourite {
-  static addToFavourite(homeId, callBack) {
+
+  static addToFavourite(homeId, callback) {
     Favourite.getFavourites((favourites) => {
       if (favourites.includes(homeId)) {
-        callBack("home is already marked as favourites");
+        callback("Home is already marked favourite");
       } else {
         favourites.push(homeId);
-        fs.writeFileSync(favouriteDataPath,JSON.stringify(favourites),callBack);
+        fs.writeFile(favouriteDataPath, JSON.stringify(favourites), callback);
       }
     });
   }
 
-  static getFavourites(callBack) {
+   static getFavourites(callback) {
     fs.readFile(favouriteDataPath, (err, data) => {
-      callBack(!err ? JSON.parse(data) : []);
+      callback(!err ? JSON.parse(data) : []);
     });
   }
 };

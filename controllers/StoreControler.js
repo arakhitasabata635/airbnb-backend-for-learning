@@ -29,11 +29,16 @@ exports.getBookings = (req, res) => {
 };
 
 exports.getFavouriteList = (req, res) => {
-  Home.fetchAll((registerdHomes) => {
-    res.render("store/favourite-list", {
-      registerdHomes: registerdHomes,
-      pageTitle: "My Favourites",
-      currentPage: "favourites",
+  Favourite.getFavourites((favouriteIds) => {
+    Home.fetchAll((registerdHomes) => {
+      const favouriteHomes = registerdHomes.filter((home) =>
+        favouriteIds.includes(home.id)
+      );
+      res.render("store/favourite-list", {
+        registerdHomes: favouriteHomes,
+        pageTitle: "My Favourites",
+        currentPage: "favourites",
+      });
     });
   });
 };
@@ -53,12 +58,11 @@ exports.getHomeDetails = (req, res) => {
   });
 };
 
-exports.postAddToFavourite = (req, res) => {
-  const homeId = req.body.id;
-  Favourite.addToFavourite(homeId, (err) => {
-    if (err) {
-      console.log("Error while marking favourites: ", err);
+exports.postAddToFavourite = (req, res, next) => {
+  Favourite.addToFavourite(req.body.id, error => {
+    if (error) {
+      console.log("Error while marking favourite: ", error);
     }
     res.redirect("/favourites");
-  });
-};
+  })
+}
