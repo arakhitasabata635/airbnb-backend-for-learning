@@ -4,8 +4,6 @@ const path = require("path");
 //local module
 const rootDir = require("../utils/pathUtil");
 
-
-
 const homeDataPath = path.join(rootDir, "data", "homes.json");
 module.exports = class Home {
   constructor(houseName, price, location, rating, image) {
@@ -16,14 +14,21 @@ module.exports = class Home {
     this.image = image;
   }
   save() {
-    this.id=Math.random().toString();
     Home.fetchAll((registerdHomes) => {
-      registerdHomes.push(this);
+      if (this.id) {
+        registerdHomes = registerdHomes.map((home) =>
+          home.id === this.id ? this : home
+        );
+      } else {
+        this.id = Math.random().toString();
+        registerdHomes.push(this);
+      }
+
       fs.writeFileSync(
         homeDataPath,
         JSON.stringify(registerdHomes),
         (error) => {
-          console.log(error);
+          console.log("file writing concluded", error);
         }
       );
     });
@@ -41,5 +46,12 @@ module.exports = class Home {
       const homeFound = registerdHomes.find((home) => home.id === homeId);
       callBack(homeFound);
     });
-  };
+  }
+
+  static deleteById(homeId, callBack) {
+    Home.fetchAll((homes) => {
+      homes = homes.filter((home) => home.id !== homeId);
+      fs.writeFile(homeDataPath, JSON.stringify(homes), callBack);
+    });
+  }
 };
