@@ -820,6 +820,21 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-\[\#6e474e\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(110 71 78 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#e2a1ad\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 161 173 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#af727d\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(175 114 125 / var(--tw-bg-opacity, 1));
+}
+
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }

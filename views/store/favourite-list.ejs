@@ -33,11 +33,12 @@
               <span class="font-semibold">Location:</span> <%= home.location %>
             </p>
             <div class="flex items-center justify-between mt-3 w-full">
-              <button
-                class="bg-[#ff385c] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
+
+              <form action="/favourites/delete/<%= home.id %>" method="POST" 
+                class="bg-[#af727d] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
               >
-                Book
-              </button>
+                <button type="submit">Remove from fevourites</button>
+              </form>
               <div class="flex items-center text-yellow-500 font-semibold">
                 <svg
                   class="w-4 h-4 inline-block mr-1"
