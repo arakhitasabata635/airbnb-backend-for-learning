@@ -10,7 +10,8 @@ exports.getAddHome = (req, res) => {
 exports.getEditHome = (req, res) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === "true";
-  Home.findById(homeId, (home) => {
+  Home.findById(homeId).then(([homes]) => {
+    const home = homes[0];
     if (!home) {
       return res.redirect("/host/host-home-list");
     }
@@ -25,21 +26,29 @@ exports.getEditHome = (req, res) => {
 };
 
 exports.postAddHome = (req, res) => {
-  const { houseName, price, location, rating, image } = req.body;
-  const home = new Home(houseName, price, location, rating, image);
+  const { houseName, price, location, rating, image, description } = req.body;
+  const home = new Home(houseName, price, location, rating, image, description);
   home.save();
   res.redirect("/host/host-home-list");
 };
 exports.postEditHome = (req, res) => {
-  const { id, houseName, price, location, rating, image } = req.body;
-  const home = new Home(houseName, price, location, rating, image);
-  home.id = id;
+  const { id, houseName, price, location, rating, image, description } =
+    req.body;
+  const home = new Home(
+    houseName,
+    price,
+    location,
+    rating,
+    image,
+    description,
+    id
+  );
   home.save();
   res.redirect("/host/host-home-list");
 };
 
 exports.getHostHomes = (req, res) => {
-  Home.fetchAll((registerdHomes) => {
+  Home.fetchAll().then(([registerdHomes]) => {
     res.render("host/host-home-list", {
       registerdHomes: registerdHomes,
       pageTitle: "Host homes list",
@@ -50,10 +59,11 @@ exports.getHostHomes = (req, res) => {
 exports.postDeleteHome = (req, res) => {
   const homeId = req.params.homeId;
   console.log(homeId);
-  Home.deleteById(homeId, (error) => {
-    if(error){
-      console.log("Error deleting home:", error);
-    };
-    res.redirect("/host/host-home-list");
-  });
+  Home.deleteById(homeId)
+    .then(() => {
+      res.redirect("/host/host-home-list");
+    })
+    .catch((err) => {
+      console.log("Error while deleting home: ", err);
+    });
 };

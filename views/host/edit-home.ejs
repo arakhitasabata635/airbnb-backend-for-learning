@@ -57,6 +57,11 @@
           class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
           required
         />
+        <textarea
+          name="description"
+          placeholder="Description of your home"
+          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
+        ><%= editing ? `${home.description}` : '' %></textarea>
         <input
         
           type="submit"

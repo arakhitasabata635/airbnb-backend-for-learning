@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
-  "server": "nodemon app.js",
-  "start": "concurrently \"npm run tailwind\" \"npm run server\""
+    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
+    "server": "nodemon app.js",
+    "start": "concurrently \"npm run tailwind\" \"npm run server\""
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "express-router": "^0.0.1"
+    "express-router": "^0.0.1",
+    "mysql2": "^3.15.2"
   }
 }
