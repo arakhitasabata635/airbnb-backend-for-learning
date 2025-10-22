@@ -33,8 +33,9 @@
               <span class="font-semibold">Location:</span> <%= home.location %>
             </p>
             <div class="flex items-center justify-between mt-3 w-full">
-
-              <form action="/favourites/delete/<%= home.id %>" method="POST" 
+              <form
+                action="/favourites/delete/<%= home._id %>"
+                method="POST"
                 class="bg-[#af727d] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
               >
                 <button type="submit">Remove from fevourites</button>

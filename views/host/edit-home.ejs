@@ -16,7 +16,7 @@
         >
           <%= editing ? "Edit" : "Register " %> your Home on Airbnb
         </h1>
-        <input type="hidden" name="id" value="<%= editing ? home.id : '' %>">
+        <input type="hidden" name="id" value="<%= editing ? home._id : '' %>">
         <input
          <%= editing ? `value=${home.houseName}` : '' %>
           type="text"
