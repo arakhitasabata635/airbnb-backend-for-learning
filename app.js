@@ -8,7 +8,7 @@ const storeRouters = require("./routes/storeRouters");
 const { hostRouter } = require("./routes/hostRouter");
 const rootDir = require("./utils/pathUtil");
 const errorControllers = require("./controllers/error");
-const { mongoConnect } = require("./utils/databaseUtill");
+const { default: mongoose } = require("mongoose");
 
 //app initialization
 const app = express();
@@ -27,8 +27,17 @@ app.use(errorControllers.pageNotFound);
 
 //server setup
 const PORT = 3000;
-mongoConnect(() => {
-  app.listen(PORT, () => {
-    console.log(`server is runing on port http://localhost:${PORT}`);
+const MONGO_URL =
+  "mongodb+srv://root:root@airbnb.ziazdyk.mongodb.net/airbnb?retryWrites=true&w=majority&appName=airbnb";
+
+mongoose
+  .connect(MONGO_URL)
+  .then(() => {
+    console.log("connected to mongoose");
+    app.listen(PORT, () => {
+      console.log(`server is runing on port http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("error while connecting to mongoose", err);
   });
-});
