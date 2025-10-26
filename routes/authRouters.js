@@ -7,6 +7,7 @@ const authControllers = require("../controllers/authControler");
 
 authRouters.get("/login", authControllers.getLogin);
 authRouters.post("/login", authControllers.postLogin);
+authRouters.post("/logout", authControllers.postLogout)
 
 
 module.exports = authRouters;
