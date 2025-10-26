@@ -4,3 +4,9 @@ exports.getLogin = (req, res) => {
     currentPage: "login",
   });
 };
+
+exports.postLogin = (req, res) => {
+  const { email, password } = req.body;
+  // Implement  authentication logic here
+  res.redirect("/");
+}
