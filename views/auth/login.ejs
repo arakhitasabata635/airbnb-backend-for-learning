@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../partials/head") %>
+  <body>
+    <%- include("../partials/header") %>
+    <main
+      class="flex flex-col items-center justify-center min-h-[70vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-12 px-2"
+    >
+      <form
+        action="/login"
+        method="POST"
+        class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md border border-[#ff385c]/20"
+      >
+        <h1
+          class="text-3xl font-extrabold mb-2 text-[#ff385c] text-center tracking-tight drop-shadow"
+        >
+          Login to your account
+        </h1>
+        <div class="flex flex-col gap-4 mt-4 w-full">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50 w-full"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50 w-full"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-[#ff385c] text-white font-bold py-3 rounded-md cursor-pointer transition-all duration-200 hover:opacity-90 hover:scale-105 shadow mt-2"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </main>
+  </body>
+</html>
