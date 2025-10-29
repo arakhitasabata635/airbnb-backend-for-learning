@@ -1,5 +1,5 @@
-const Favourite = require("../models/favourite");
 const Home = require("../models/home");
+const User = require("../models/user");
 
 exports.getIndex = (req, res) => {
   Home.find().then((registerdHomes) => {
@@ -34,22 +34,19 @@ exports.getBookings = (req, res) => {
   });
 };
 
-exports.getFavouriteList = (req, res) => {
-  Favourite.find()
-    .populate("houseId")
-    .then((favouriteIds) => {
-      const favouriteHomes = favouriteIds.map((fav) => fav.houseId);
-      res.render("store/favourite-list", {
-        registerdHomes: favouriteHomes,
-        pageTitle: "My Favourites",
-        currentPage: "favourites",
-        isLoggedIn: req.isLoggedIn,
-        user: req.session.user,
-      });
-    });
+exports.getFavouriteList = async (req, res) => {
+  const userId = req.session.user._id;
+  const user = await User.findById(userId).populate("favourites");
+  res.render("store/favourite-list", {
+    registerdHomes: user.favourites,
+    pageTitle: "My Favourites",
+    currentPage: "favourites",
+    isLoggedIn: req.isLoggedIn,
+    user: req.session.user,
+  });
 };
 
-exports.postRemoveFromFavourite = (req, res) => {
+exports.postRemoveFromFavourite = async(req, res) => {
   const homeId = req.params.homeId;
   Favourite.findOneAndDelete({ houseId: homeId })
     .then((result) => {
@@ -80,27 +77,13 @@ exports.getHomeDetails = (req, res) => {
   });
 };
 
-exports.postAddToFavourite = (req, res, next) => {
+exports.postAddToFavourite = async (req, res, next) => {
   const homeId = req.body.id;
-  Favourite.findOne({ houseId: homeId })
-    .then((existingFav) => {
-      if (existingFav) {
-        console.log("fav already exists");
-      } else {
-        const fav = new Favourite({ houseId: homeId });
-        fav
-          .save()
-          .then(() => {
-            console.log("fav added successfully");
-          })
-          .catch((err) => {
-            console.log("error while adding fav:", err);
-          });
-      }
-      res.redirect("/favourites");
-    })
-    .catch((err) => {
-      console.log("error while finding fav:", err);
-      res.redirect("/favourites");
-    });
+  const userId = req.session.user._id;
+  const user = await User.findById(userId);
+  if (!user.favourites.includes(homeId)) {
+    user.favourites.push(homeId);
+    await user.save();
+  }
+  res.redirect("/favourites");
 };
