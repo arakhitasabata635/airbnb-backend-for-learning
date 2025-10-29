@@ -1,0 +1,32 @@
+<% if (errors.length > 0) { %>
+        <div
+          role="alert"
+          class="w-full bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-2"
+        >
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-red-600 flex-none"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8.257 3.099c.763-1.36 2.72-1.36 3.483 0l6.518 11.626A1.75 1.75 0 0116.518 17H3.482A1.75 1.75 0 011.74 14.725L8.257 3.1zM11 13a1 1 0 10-2 0 1 1 0 002 0zm-1-8a.9.9 0 00-.9.9v4.2c0 .497.403.9.9.9s.9-.403.9-.9V5.9A.9.9 0 0010 5z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <div class="flex-1">
+              <p class="font-semibold">
+                Please fix the following <%= errors.length %> error<%=
+                errors.length > 1 ? 's' : '' %>:
+              </p>
+              <ul class="mt-2 list-disc list-inside space-y-1 text-sm">
+                <% errors.forEach((err)=> {%>
+                <li><%= err %></li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <% } %>

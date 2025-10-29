@@ -7,15 +7,38 @@ exports.getLogin = (req, res) => {
     pageTitle: "login to your account",
     currentPage: "login",
     isLoggedIn: false,
+    oldInput:{ email:""},
+    errors: [],
   });
 };
 
-exports.postLogin = (req, res) => {
+exports.postLogin = async(req, res) => {
   const { email, password } = req.body;
+  const user = await User.findOne({email})
+  if(!user) {
+    return res.status(422).render("auth/login", {
+    pageTitle: "Login",
+    currentPage: "login",
+    isLoggedIn: false,
+    errors: ["user does not exist "],
+    oldInput: { email},
+  });
+  }
+  // password match
+  const isMatch = await bcrypt.compare(password, user.password)
+  if(!isMatch){
+    return res.status(422).render("auth/login", {
+    pageTitle: "Login",
+    currentPage: "login",
+    isLoggedIn: false,
+    errors: ["Invalid password "],
+    oldInput: { email},
+  });
+  } 
+
   req.session.isLoggedIn = true;
-  // Implement  authentication logic here
-  //res.cookie("isLoggedIn", true)
-  //req.isLoggedIn = true;
+  req.session.user = user;
+  await req.session.save();
   res.redirect("/");
 };
 
