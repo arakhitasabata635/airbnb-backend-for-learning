@@ -1,5 +1,6 @@
 const { check, validationResult } = require("express-validator");
-const User= require("../models/user")
+const User = require("../models/user");
+const bcrypt = require("bcryptjs")
 
 exports.getLogin = (req, res) => {
   res.render("auth/login", {
@@ -29,8 +30,8 @@ exports.getSignup = (req, res, next) => {
     pageTitle: "signup",
     currentPage: "signup",
     isLoggedIn: false,
-    errors:[],
-    oldInput: { firstName: "", lastName:"", email:"", userType:"" }
+    errors: [],
+    oldInput: { firstName: "", lastName: "", email: "", userType: "" },
   });
 };
 exports.postSignup = [
@@ -87,7 +88,7 @@ exports.postSignup = [
     }),
 
   (req, res, next) => {
-    const { firstName, lastName, email,password, userType } = req.body;
+    const { firstName, lastName, email, password, userType } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).render("auth/signup", {
@@ -98,18 +99,29 @@ exports.postSignup = [
         oldInput: { firstName, lastName, email, userType },
       });
     }
-
-    const user = new User({firstName, lastName, email, password, userType});
-    user.save().then(()=>{
-      res.redirect("/login");
-    }).catch(err => {
-      return res.satatus(442).render("auth/signup", {
-        pageTitle: "signup",
-        currentPage: "signup",
-        isLoggedIn: false,
-        errors: [err.message],
-        oldInput: { firstName, lastName, email, userType },
+    bcrypt
+      .hash(password, 12)
+      .then((hashedPassword) => {
+        const user = new User({
+          firstName,
+          lastName,
+          email,
+          password: hashedPassword,
+          userType,
+        });
+        return user.save();
+      })
+      .then(() => {
+        res.redirect("/login");
+      })
+      .catch((err) => {
+        return res.status(442).render("auth/signup", {
+          pageTitle: "signup",
+          currentPage: "signup",
+          isLoggedIn: false,
+          errors: [err.message],
+          oldInput: { firstName, lastName, email, userType },
+        });
       });
-    })
   },
 ];
