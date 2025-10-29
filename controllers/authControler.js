@@ -1,40 +1,43 @@
 const { check, validationResult } = require("express-validator");
 const User = require("../models/user");
-const bcrypt = require("bcryptjs")
+const bcrypt = require("bcryptjs");
 
 exports.getLogin = (req, res) => {
   res.render("auth/login", {
     pageTitle: "login to your account",
     currentPage: "login",
     isLoggedIn: false,
-    oldInput:{ email:""},
+    oldInput: { email: "" },
     errors: [],
+    user: {},
   });
 };
 
-exports.postLogin = async(req, res) => {
+exports.postLogin = async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({email})
-  if(!user) {
+  const user = await User.findOne({ email });
+  if (!user) {
     return res.status(422).render("auth/login", {
-    pageTitle: "Login",
-    currentPage: "login",
-    isLoggedIn: false,
-    errors: ["user does not exist "],
-    oldInput: { email},
-  });
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["user does not exist "],
+      oldInput: { email },
+      user: {},
+    });
   }
   // password match
-  const isMatch = await bcrypt.compare(password, user.password)
-  if(!isMatch){
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
     return res.status(422).render("auth/login", {
-    pageTitle: "Login",
-    currentPage: "login",
-    isLoggedIn: false,
-    errors: ["Invalid password "],
-    oldInput: { email},
-  });
-  } 
+      pageTitle: "Login",
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["Invalid password "],
+      oldInput: { email },
+      user: {},
+    });
+  }
 
   req.session.isLoggedIn = true;
   req.session.user = user;
@@ -55,6 +58,7 @@ exports.getSignup = (req, res, next) => {
     isLoggedIn: false,
     errors: [],
     oldInput: { firstName: "", lastName: "", email: "", userType: "" },
+    user: {},
   });
 };
 exports.postSignup = [
@@ -120,6 +124,7 @@ exports.postSignup = [
         isLoggedIn: false,
         errors: errors.array().map((err) => err.msg),
         oldInput: { firstName, lastName, email, userType },
+        user: {},
       });
     }
     bcrypt
@@ -144,6 +149,7 @@ exports.postSignup = [
           isLoggedIn: false,
           errors: [err.message],
           oldInput: { firstName, lastName, email, userType },
+          user: {},
         });
       });
   },

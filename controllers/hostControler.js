@@ -6,6 +6,7 @@ exports.getAddHome = (req, res) => {
     currentPage: "add-home",
     editing: false,
     isLoggedIn: req.isLoggedIn,
+    user: req.session.user,
   });
 };
 exports.getEditHome = (req, res) => {
@@ -22,6 +23,7 @@ exports.getEditHome = (req, res) => {
       currentPage: "host-homes",
       editing: editing,
       isLoggedIn: req.isLoggedIn,
+      user: req.session.user,
     });
   });
 };
@@ -44,21 +46,26 @@ exports.postAddHome = (req, res) => {
 exports.postEditHome = (req, res) => {
   const { id, houseName, price, location, rating, image, description } =
     req.body;
-  Home.findById(id).then((home) => {
-    home.houseName = houseName;
-    home.price = price;
-    home.location = location;
-    home.rating = rating;
-    home.image = image;
-    home.description = description;
-    home.save().then((result)=>{
-      console.log("home updated successfully", result);
-    }).catch (() => {
-      console.log("error while updating home");
+  Home.findById(id)
+    .then((home) => {
+      home.houseName = houseName;
+      home.price = price;
+      home.location = location;
+      home.rating = rating;
+      home.image = image;
+      home.description = description;
+      home
+        .save()
+        .then((result) => {
+          console.log("home updated successfully", result);
+        })
+        .catch(() => {
+          console.log("error while updating home");
+        });
+    })
+    .catch(() => {
+      console.log("error while finding home");
     });
-  }).catch(() => {
-    console.log("error while finding home");
-  });
   res.redirect("/host/host-home-list");
 };
 
@@ -69,6 +76,7 @@ exports.getHostHomes = (req, res) => {
       pageTitle: "Host homes list",
       currentPage: "host-homes",
       isLoggedIn: req.isLoggedIn,
+      user: req.session.user,
     });
   });
 };
