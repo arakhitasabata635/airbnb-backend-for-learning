@@ -3,30 +3,70 @@
   <%- include("../partials/head") %>
   <body>
     <%- include("../partials/header") %>
-    <main class="flex flex-col items-center justify-center min-h-[80vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-12 px-4">
+    <main
+      class="flex flex-col items-center justify-center min-h-[80vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-12 px-4"
+    >
       <form
         action="/signup"
         method="POST"
         class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md border border-[#ff385c]/20 hover:shadow-xl transition-shadow duration-300"
       >
-        <h1 class="text-3xl font-extrabold mb-4 text-[#ff385c] text-center tracking-tight drop-shadow-sm">
+        <h1
+          class="text-3xl font-extrabold mb-4 text-[#ff385c] text-center tracking-tight drop-shadow-sm"
+        >
           Welcome to Airbnb
-          <span class="block text-lg font-medium text-gray-600 mt-2">Create your account</span>
+          <span class="block text-lg font-medium text-gray-600 mt-2"
+            >Create your account</span
+          >
         </h1>
 
+        <% if (errors.length > 0) { %>
+        <div
+          role="alert"
+          class="w-full bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 mb-2"
+        >
+          <div class="flex items-start gap-3">
+            <svg
+              class="w-6 h-6 text-red-600 flex-none"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8.257 3.099c.763-1.36 2.72-1.36 3.483 0l6.518 11.626A1.75 1.75 0 0116.518 17H3.482A1.75 1.75 0 011.74 14.725L8.257 3.1zM11 13a1 1 0 10-2 0 1 1 0 002 0zm-1-8a.9.9 0 00-.9.9v4.2c0 .497.403.9.9.9s.9-.403.9-.9V5.9A.9.9 0 0010 5z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <div class="flex-1">
+              <p class="font-semibold">
+                Please fix the following <%= errors.length %> error<%=
+                errors.length > 1 ? 's' : '' %>:
+              </p>
+              <ul class="mt-2 list-disc list-inside space-y-1 text-sm">
+                <% errors.forEach((err)=> {%>
+                <li><%= err %></li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <% } %>
         <div class="flex flex-col gap-4 w-full">
           <div class="grid grid-cols-2 gap-4">
             <input
               type="text"
-              name="first_name"
+              name="firstName"
+              value="<%= oldInput.firstName %>"
               placeholder="First Name"
               class="border-2 border-[#ff385c]/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] focus:border-transparent text-base bg-gray-50 w-full transition-all duration-200 placeholder-gray-400"
               required
             />
             <input
               type="text"
-              name="last_name"
+              name="lastName"
               placeholder="Last Name"
+              value="<%= oldInput.lastName %>"
               class="border-2 border-[#ff385c]/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] focus:border-transparent text-base bg-gray-50 w-full transition-all duration-200 placeholder-gray-400"
             />
           </div>
@@ -34,6 +74,7 @@
           <input
             type="email"
             name="email"
+            value="<%= oldInput.email %>"
             placeholder="Email address"
             class="border-2 border-[#ff385c]/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] focus:border-transparent text-base bg-gray-50 w-full transition-all duration-200 placeholder-gray-400"
             required
@@ -59,20 +100,38 @@
             <p class="text-sm font-semibold text-gray-700 mb-3">I want to:</p>
             <div class="flex gap-6">
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="userType" value="guest" id="guest" class="w-4 h-4 text-[#ff385c] focus:ring-[#ff385c]">
+                 <input type="radio" name="userType"
+                value="guest" id="guest"  class="w-4 h-4 text-[#ff385c] focus:ring-[#ff385c]"
+                 
+                >
                 <span class="text-gray-700">Book a stay</span>
               </label>
               <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="userType" value="host" id="host" class="w-4 h-4 text-[#ff385c] focus:ring-[#ff385c]">
-                <span class="text-gray-700">Host my home</span>
+                <input type="radio"  name="userType" value="host" id="host"
+                class="w-4 h-4 text-[#ff385c] focus:ring-[#ff385c]"
+               
+                >
+                <span class="text-gray-700">Host</span>
               </label>
             </div>
           </div>
 
           <label class="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" name="terms" id="terms" class="w-4 h-4 rounded text-[#ff385c] focus:ring-[#ff385c]">
+            <input
+              type="checkbox"
+              name="terms"
+              id="terms"
+              class="w-4 h-4 rounded text-[#ff385c] focus:ring-[#ff385c]"
+            />
             <span class="text-sm text-gray-600">
-              I agree to Airbnb's <a href="#" class="text-[#ff385c] hover:underline">Terms of Service</a> and <a href="#" class="text-[#ff385c] hover:underline">Privacy Policy</a>
+              I agree to Airbnb's
+              <a href="#" class="text-[#ff385c] hover:underline"
+                >Terms of Service</a
+              >
+              and
+              <a href="#" class="text-[#ff385c] hover:underline"
+                >Privacy Policy</a
+              >
             </span>
           </label>
 
@@ -84,8 +143,12 @@
           </button>
 
           <p class="text-center text-sm text-gray-600">
-            Already have an account? 
-            <a href="/login" class="text-[#ff385c] hover:underline font-semibold">Log in</a>
+            Already have an account?
+            <a
+              href="/login"
+              class="text-[#ff385c] hover:underline font-semibold"
+              >Log in</a
+            >
           </p>
         </div>
       </form>
