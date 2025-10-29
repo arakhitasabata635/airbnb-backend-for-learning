@@ -30,6 +30,8 @@ exports.getEditHome = (req, res) => {
 
 exports.postAddHome = (req, res) => {
   const { houseName, price, location, rating, image, description } = req.body;
+  console.log(image);
+  console.log(req.file)
   const home = new Home({
     houseName,
     price,

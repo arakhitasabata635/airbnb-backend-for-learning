@@ -3,7 +3,9 @@ const path = require("path");
 //external modules
 const express = require("express");
 const session = require("express-session");
-const MongoDBStore= require("connect-mongodb-session")(session);
+const MongoDBStore = require("connect-mongodb-session")(session);
+const multer = require("multer");
+const { default: mongoose } = require("mongoose");
 const MONGO_URL =
   "mongodb+srv://root:root@airbnb.ziazdyk.mongodb.net/airbnb?retryWrites=true&w=majority&appName=airbnb";
 //Local modules
@@ -12,7 +14,6 @@ const { hostRouter } = require("./routes/hostRouter");
 const authRouters = require("./routes/authRouters");
 const rootDir = require("./utils/pathUtil");
 const errorControllers = require("./controllers/error");
-const { default: mongoose } = require("mongoose");
 
 //app initialization
 const app = express();
@@ -22,11 +23,29 @@ app.set("views", path.join(rootDir, "views"));
 
 const store = new MongoDBStore({
   uri: MONGO_URL,
-  collection: 'sessions'
-})
+  collection: "sessions",
+});
+
+const randomString = (len) =>
+  Array.from({ length: len }, () =>
+    String.fromCharCode(97 + Math.floor(Math.random() * 26))
+  ).join("");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, randomString(10) + '-' + file.originalname);
+  },
+});
+const multerOption = {
+  storage,
+};
+app.use(express.urlencoded());
+app.use(multer(multerOption).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
 
-app.use(express.urlencoded());
 app.use(
   session({
     secret: "this is a airbnb app",
@@ -55,7 +74,6 @@ app.use(errorControllers.pageNotFound);
 
 //server setup
 const PORT = 3000;
-
 
 mongoose
   .connect(MONGO_URL)
