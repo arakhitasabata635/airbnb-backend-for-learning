@@ -1,68 +1,154 @@
-<header
-  class="flex justify-start items-center gap-6 px-8 py-4 bg-[#ff385c] shadow"
->
-  <a
-    href="/"
-    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='index' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    airbnb
-  </a>
-  <% if (isLoggedIn) { %> <% if(user && user.userType === 'guest'){ %>
-  <a
-    href="/homes"
-    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='home' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    Homes-List
-  </a>
+<header class="sticky top-0 z-40 backdrop-blur-sm bg-[#ff385c]/95 shadow-md">
+  <div class="max-w-6xl mx-auto flex items-center gap-6 px-6 py-3">
 
-  <a
-    href="/favourites"
-    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='favourites' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    favourites
-  </a>
-
-  <a
-    href="/bookings"
-    class="px-4 py-2 rounded-md font-bold text-lg no-underline transition-colors duration-200 <%= currentPage==='booking' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    Bookings
-  </a>
-  <% } else{ %>
-  <a
-    href="/host/host-home-list"
-    class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='host-homes' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    Host Homes
-  </a>
-
-  <a
-    href="/host/add-home"
-    class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='add-home' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    Add Home
-  </a>
-  <% } %> <% } %> <% if(!isLoggedIn){ %>
-  <a
-    href="/signup"
-    class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='signup' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    SignUp
-  </a>
-  <a
-    href="/login"
-    class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='login' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
-  >
-    Login
-  </a>
-  <% } else { %>
-  <form action="/logout" method="POST">
-    <button
-      type="submit"
-      class="px-4 py-2 rounded-md font-medium no-underline transition-colors duration-200 <%= currentPage==='login' ? 'bg-white text-[#ff385c] shadow' : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+    <!-- Logo -->
+    <a href="/" aria-label="Home"
+      class="flex items-center gap-2 px-4 py-2 rounded-md font-bold text-lg no-underline
+      transition-all duration-200 transform hover:-translate-y-0.5
+      <%= currentPage==='index'
+      ? 'bg-white text-[#ff385c] shadow-lg'
+      : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
     >
-      Logout
-    </button>
-  </form>
-  <% } %>
+      <svg class="w-6 h-6 -ml-1" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+          fill="currentColor" />
+        <circle cx="12" cy="9" r="2.2" fill="white" />
+      </svg>
+      <span class="leading-none tracking-tight select-none">airbnb</span>
+    </a>
+
+    <% if (isLoggedIn) { %>
+
+      <!-- GUEST MENU -->
+      <% if (user && user.userType === 'guest') { %>
+        <nav class="flex items-center gap-2 ml-1">
+          
+          <a href="/homes" aria-label="Homes list"
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='home'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 2L2 8h2v8h4V12h4v4h4V8h2L10 2z" />
+            </svg>
+            <span>Homes-List</span>
+          </a>
+
+          <a href="/favourites" aria-label="Favourites"
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='favourites'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 18l-6.828-6.828a4 4 0 010-5.656z" />
+            </svg>
+            <span>favourites</span>
+          </a>
+
+          <a href="/bookings" aria-label="Bookings"
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='booking'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M6 2v2H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2V2h-2v2H8V2H6zm2 8h4v6H8v-6z"/>
+            </svg>
+            <span>Bookings</span>
+          </a>
+
+        </nav>
+
+      <!-- HOST MENU -->
+      <% } else { %>
+        <nav class="flex items-center gap-2 ml-1">
+
+          <a href="/host/host-home-list" aria-label="Host homes"
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='host-homes'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M3 9l7-6 7 6v7a1 1 0 01-1 1H4a1 1 0 01-1-1V9z" />
+            </svg>
+            <span>Host Homes</span>
+          </a>
+
+          <a href="/host/add-home" aria-label="Add home"
+            class="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='add-home'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M11 4h-1v5H5v1h5v5h1v-5h5v-1h-5V4z" />
+            </svg>
+            <span>Add Home</span>
+          </a>
+
+        </nav>
+      <% } %>
+    <% } %>
+
+    <!-- AUTH BUTTONS -->
+    <% if (!isLoggedIn) { %>
+      <div class="ml-auto flex items-center gap-2">
+
+        <a href="/signup" aria-label="Sign up"
+          class="px-4 py-2 rounded-md font-medium text-sm no-underline
+          transition-all duration-200 transform hover:-translate-y-0.5
+          <%= currentPage==='signup'
+          ? 'bg-white text-[#ff385c] shadow-lg'
+          : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+        >
+          <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 2a4 4 0 110 8 4 4 0 010-8zM2 18a8 8 0 0116 0H2z" />
+          </svg>
+          SignUp
+        </a>
+
+        <a href="/login" aria-label="Login"
+          class="px-4 py-2 rounded-md font-medium text-sm no-underline
+          transition-all duration-200 transform hover:-translate-y-0.5
+          <%= currentPage==='login'
+          ? 'bg-white text-[#ff385c] shadow-lg'
+          : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+        >
+          <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 8a1 1 0 011-1h8V5H4a2 2 0 00-2 2v6a2 2 0 002 2h8v-2H4a1 1 0 01-1-1V8zM12 7l4 3-4 3V7z" />
+          </svg>
+          Login
+        </a>
+
+      </div>
+
+    <% } else { %>
+      <div class="ml-auto">
+        <form action="/logout" method="POST" class="inline">
+          <button type="submit" aria-label="Logout"
+            class="flex items-center gap-2 px-4 py-2 rounded-md font-medium text-sm no-underline
+            transition-all duration-200 transform hover:-translate-y-0.5
+            <%= currentPage==='login'
+            ? 'bg-white text-[#ff385c] shadow-lg'
+            : 'text-white hover:bg-white hover:text-[#ff385c] hover:shadow' %>"
+          >
+            <svg class="w-4 h-4 inline-block mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M7 4v3H3v6h4v3l5-5-5-5zM17 3h-6v2h6v10h-6v2h6a2 2 0 002-2V5a2 2 0 00-2-2z" />
+            </svg>
+            Logout
+          </button>
+        </form>
+      </div>
+    <% } %>
+
+  </div>
 </header>

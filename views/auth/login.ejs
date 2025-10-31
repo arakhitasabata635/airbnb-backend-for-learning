@@ -3,43 +3,66 @@
   <%- include("../partials/head") %>
   <body>
     <%- include("../partials/header") %>
+
     <main
-      class="flex flex-col items-center justify-center min-h-[70vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-12 px-2"
+      class="flex flex-col items-center justify-center min-h-[75vh]
+      bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-14 px-4"
     >
       <form
         action="/login"
         method="POST"
-        class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md border border-[#ff385c]/20"
+        class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md
+        border border-[#ff385c]/30 space-y-7
+        transition-transform duration-300 hover:scale-[1.02]"
       >
+        <!-- Title -->
         <h1
-          class="text-3xl font-extrabold mb-2 text-[#ff385c] text-center tracking-tight drop-shadow"
+          class="text-3xl font-extrabold text-center tracking-tight text-[#ff385c]"
         >
           Login to your account
         </h1>
+
+        <!-- Errors -->
         <%- include("../partials/errors") %>
-        <div class="flex flex-col gap-4 mt-4 w-full">
+
+        <!-- Email -->
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-gray-600">Email</label>
           <input
             type="email"
             name="email"
-            value= "<%= oldInput.email %>"
+            value="<%= oldInput.email %>"
             placeholder="Enter your email"
-            class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50 w-full"
+            class="border border-gray-300 rounded-xl px-4 py-3 shadow-sm
+            focus:border-[#ff385c] focus:ring-2 focus:ring-[#ff385c]/50
+            text-lg bg-gray-50"
             required
           />
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-2">
+          <label class="font-semibold text-gray-600">Password</label>
           <input
             type="password"
             name="password"
             placeholder="Password"
-            class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50 w-full"
+            class="border border-gray-300 rounded-xl px-4 py-3 shadow-sm
+            focus:border-[#ff385c] focus:ring-2 focus:ring-[#ff385c]/50
+            text-lg bg-gray-50"
             required
           />
-          <button
-            type="submit"
-            class="bg-[#ff385c] text-white font-bold py-3 rounded-md cursor-pointer transition-all duration-200 hover:opacity-90 hover:scale-105 shadow mt-2"
-          >
-            Login
-          </button>
         </div>
+
+        <!-- Button -->
+        <button
+          type="submit"
+          class="w-full bg-[#ff385c] text-white font-bold text-lg py-3
+          rounded-xl shadow-md hover:scale-105 hover:bg-[#e23350]
+          transition-all duration-200"
+        >
+          Login
+        </button>
       </form>
     </main>
   </body>

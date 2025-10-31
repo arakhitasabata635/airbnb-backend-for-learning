@@ -30,6 +30,7 @@ exports.getEditHome = (req, res) => {
 };
 
 exports.postAddHome = (req, res) => {
+  console.log(req.body);
   const { houseName, price, location, rating, description } = req.body;
   console.log(req.file);
 

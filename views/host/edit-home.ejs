@@ -1,72 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("../partials/head") %>
-  <body>
+  <body class="bg-gray-100">
     <%- include("../partials/header") %>
-    <main
-      class="flex flex-col items-center justify-center min-h-[70vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff] py-12 px-2"
-    >
+
+    <main class="flex justify-center items-center min-h-[80vh] px-4 py-10">
       <form
-      enctype="multipart/form-data"
-        action="/host/<%= editing ? "edit-home" : "add-home"%>"
+        enctype="multipart/form-data"
+        action="/host/<%= editing ? 'edit-home' : 'add-home'%>"
         method="POST"
-        class="bg-white p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md border border-[#ff385c]/20"
+        class="w-full max-w-lg bg-white shadow-xl rounded-2xl p-8 space-y-6 border border-gray-200
+        transition-transform duration-300 hover:scale-[1.01]"
       >
-        <h1
-          class="text-3xl font-extrabold mb-2 text-[#ff385c] text-center tracking-tight drop-shadow"
-        >
-          <%= editing ? "Edit" : "Register " %> your Home on Airbnb
+        <!-- Title -->
+        <h1 class="text-3xl font-extrabold text-center text-[#ff385c]">
+          <%= editing ? "Edit" : "Register" %> Your Home 🏠
         </h1>
-        <input type="hidden" name="id" value="<%= editing ? home._id : '' %>">
-        <input
-         <%= editing ? `value=${home.houseName}` : '' %>
-          type="text"
-          name="houseName"
-          placeholder="Enter your House Name"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-          required
-        />
-        <input
-        <%= editing ? `value=${home.price}` : '' %>
-          type="text"
-          name="price"
-          placeholder="Price per night"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-          required
-        />
-        <input
-        <%= editing ? `value=${home.location}` : '' %>
-          type="text"
-          name="location"
-          placeholder="Enter your house location"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-          required
-        />
-        <input
-        <%= editing ? `value=${home.rating}` : '' %>
-          type="text"
-          name="rating"
-          placeholder="Rating out of 5"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-          required
-        />
-        <input
-          type="file"
-          name="image"
-          accept="image/jpg, image/png, image/jpeg"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-        />
-        <textarea
-          name="description"
-          placeholder="Description of your home"
-          class="border-2 border-[#ff385c] rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#ff385c] text-lg bg-gray-50"
-        ><%= editing ? `${home.description}` : '' %></textarea>
-        <input
-        
-          type="submit"
-          value="<%= editing ? "Update Home" : "Add Home" %>"
-          class="bg-[#ff385c] text-white font-bold py-3 rounded-md cursor-pointer transition-all duration-200 hover:opacity-90 hover:scale-105 shadow"
-        />
+
+        <input type="hidden" name="id" value="<%= editing ? home._id : '' %>" />
+
+        <!-- Input Fields -->
+        <div class="space-y-2">
+          <label class="font-semibold text-gray-600">House Name</label>
+          <input
+            value="<%= editing ? home.houseName : '' %>"
+            type="text"
+            name="houseName"
+            placeholder="Enter your House Name"
+            class="input-style"
+            required
+          />
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="w-full space-y-2">
+            <label class="font-semibold text-gray-600">Price</label>
+            <input
+              value="<%= editing ? home.price : '' %>"
+              type="number"
+              name="price"
+              placeholder="₹ per night"
+              class="input-style"
+              required
+            />
+          </div>
+
+          <div class="w-full space-y-2">
+            <label class="font-semibold text-gray-600">Rating</label>
+            <input
+              value="<%= editing ? home.rating : '' %>"
+              type="number"
+              name="rating"
+              min="1"
+              max="5"
+              step="0.1"
+              placeholder="Out of 5"
+              class="input-style"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="font-semibold text-gray-600">Location</label>
+          <input
+            value="<%= editing ? home.location : '' %>"
+            type="text"
+            name="location"
+            placeholder="City, Country"
+            class="input-style"
+            required
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label class="font-semibold text-gray-600">Upload Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            class="rounded-lg border border-gray-300 file:bg-[#ff385c] 
+            file:text-white file:font-bold file:px-3 file:py-2 file:border-none cursor-pointer"
+          />
+        </div>
+
+        <div class="space-y-2">
+          <label class="font-semibold text-gray-600">Description</label>
+          <textarea
+            name="description"
+            placeholder="Tell something amazing about your home..."
+            rows="4"
+            class="input-style resize-none"
+          ><%= editing ? home.description : '' %></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button
+          class="w-full bg-[#ff385c] text-white py-3 font-bold rounded-xl shadow-md hover:scale-105 transition-all duration-200 focus:ring-4 focus:ring-[#ff385c]/40"
+        >
+          <%= editing ? 'Update Home' : 'Add Home' %>
+        </button>
       </form>
     </main>
   </body>

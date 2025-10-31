@@ -3,60 +3,85 @@
   <%- include("../partials/head") %>
   <body>
     <%- include("../partials/header") %>
-    <main
-      class="p-8 min-h-[80vh] bg-gradient-to-br from-[#fff1f5] via-[#f3f4f6] to-[#e0e7ff]"
-    >
-      <h2
-        class="text-3xl font-extrabold mb-10 text-center text-[#ff385c] tracking-tight drop-shadow"
-      >
-        Here are your favourites
+
+    <main class="min-h-[80vh] bg-[#f8f8ff] py-10 px-6">
+      <h2 class="text-3xl font-extrabold text-center mb-12 text-[#ff385c] tracking-tight drop-shadow">
+        Here are your favourites ❤️
       </h2>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <% if (registerdHomes.length === 0) { %>
+        <div class="text-center mt-20 text-gray-600 text-lg font-medium">
+          You haven't added any favourites yet 😔<br/>
+          <a href="/" class="text-[#ff385c] underline font-bold hover:opacity-80">
+            Explore Homes →
+          </a>
+        </div>
+      <% } else { %>
+      <ul
+        class="grid gap-10 mx-auto w-full max-w-[1300px]
+        grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
         <% registerdHomes.forEach((home) => { %>
         <li
-          class="bg-white border border-[#ff385c]/30 rounded-2xl shadow-xl flex flex-col gap-4 p-5 transition-transform duration-200 hover:scale-105 hover:shadow-2xl w-full max-w-[400px] mx-auto"
+          class="bg-white rounded-2xl shadow-lg border border-[#ff385c]/20 p-4
+          flex flex-col gap-4
+          transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl"
         >
-          <img
-            src="<%= home.image %>"
-            alt="<%= home.houseName %>"
-            class="w-full h-40 object-cover rounded-xl border border-[#ff385c]/20 shadow"
-          />
-          <div class="flex flex-col justify-center w-full px-2">
-            <h3 class="text-lg font-bold text-gray-800 mb-1 truncate">
+          <!-- Image -->
+          <div class="overflow-hidden rounded-xl">
+            <img
+              src="<%= home.image %>"
+              alt="<%= home.houseName %>"
+              class="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+            />
+          </div>
+
+          <div class="px-1 space-y-2">
+            <!-- House Name -->
+            <h3 class="text-lg font-bold text-gray-800 truncate">
               <%= home.houseName %>
             </h3>
-            <p class="text-[#ff385c] font-semibold mb-1">
+
+            <!-- Price -->
+            <p class="text-[#ff385c] font-semibold">
               ₹<%= home.price %>
-              <span class="text-gray-500 font-normal">/ night</span>
+              <span class="text-gray-500 text-sm font-normal">/ night</span>
             </p>
-            <p class="text-gray-600 mb-1">
-              <span class="font-semibold">Location:</span> <%= home.location %>
+
+            <!-- Location -->
+            <p class="text-gray-600 flex items-center gap-1 text-sm">
+              <svg class="w-4 h-4 text-[#ff385c]" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a6 6 0 00-6 6c0 4.418 6 10 6 10s6-5.582 6-10a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/>
+              </svg>
+              <%= home.location %>
             </p>
-            <div class="flex items-center justify-between mt-3 w-full">
-              <form
-                action="/favourites/delete/<%= home._id %>"
-                method="POST"
-                class="bg-[#af727d] text-white font-semibold px-4 py-2 rounded-md shadow-sm hover:opacity-90 transition-opacity duration-200"
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex items-center justify-between mt-auto">
+            <!-- Remove -->
+            <form action="/favourites/delete/<%= home._id %>" method="POST">
+              <button
+                type="submit"
+                class="bg-[#ff385c] text-white px-4 py-2 rounded-lg text-xs font-bold
+                shadow hover:opacity-90 transition"
               >
-                <button type="submit">Remove from fevourites</button>
-              </form>
-              <div class="flex items-center text-yellow-500 font-semibold">
-                <svg
-                  class="w-4 h-4 inline-block mr-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z"
-                  />
-                </svg>
-                <span class="text-sm"><%= home.rating %> / 5</span>
-              </div>
+                Remove
+              </button>
+            </form>
+
+            <!-- Rating -->
+            <div class="flex items-center text-yellow-500 text-xs font-semibold">
+              <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.784.57-1.838-.196-1.539-1.118l1.287-3.966a1 1 0 00-.364-1.118l-3.385-2.46c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.967z"/>
+              </svg>
+              <%= home.rating %> / 5
             </div>
           </div>
         </li>
         <% }); %>
       </ul>
+      <% } %>
     </main>
   </body>
 </html>
