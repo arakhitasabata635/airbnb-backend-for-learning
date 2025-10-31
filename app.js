@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 app.use(authRouters);
 app.use(storeRouters);
 app.use("/host", (req, res, next) => {
-  if (req.isLoggedIn) {
+  if (req.session.isLoggedIn) {
     next();
   } else {
     res.redirect("/login");
@@ -84,8 +84,8 @@ const multerOption = {
 
 app.use(multer(multerOption).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
-app.use('/uploads',express.static(path.join(rootDir, "uploads")));
-app.use('/host/uploads',express.static(path.join(rootDir, "uploads")));
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
 
 app.use(errorControllers.pageNotFound);
 

@@ -2,7 +2,7 @@ const Home = require("../models/home");
 const User = require("../models/user");
 
 exports.getIndex = (req, res) => {
-  console.log("islogidin"+req.session);
+  console.log("islogidin" + req.session);
   Home.find().then((registerdHomes) => {
     res.render("store/index", {
       registerdHomes: registerdHomes,
@@ -20,7 +20,7 @@ exports.getHomes = (req, res) => {
       registerdHomes: registerdHomes,
       pageTitle: "homes list",
       currentPage: "home",
-      isLoggedIn: req.isLoggedIn,
+      isLoggedIn: req.session.isLoggedIn,
       user: req.session.user,
     });
   });
@@ -30,7 +30,7 @@ exports.getBookings = (req, res) => {
   res.render("store/bookings", {
     pageTitle: "My Bookings",
     currentPage: "bookings",
-    isLoggedIn: req.isLoggedIn,
+    isLoggedIn: req.session.isLoggedIn,
     user: req.session.user,
   });
 };
@@ -45,7 +45,7 @@ exports.getHomeDetails = (req, res) => {
         home: home,
         pageTitle: "Home Details",
         currentPage: "home",
-        isLoggedIn: req.isLoggedIn,
+        isLoggedIn: req.session.isLoggedIn,
         user: req.session.user,
       });
     }
@@ -59,7 +59,7 @@ exports.getFavouriteList = async (req, res) => {
     registerdHomes: user.favourites,
     pageTitle: "My Favourites",
     currentPage: "favourites",
-    isLoggedIn: req.isLoggedIn,
+    isLoggedIn: req.session.isLoggedIn,
     user: req.session.user,
   });
 };
