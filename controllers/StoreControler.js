@@ -2,12 +2,13 @@ const Home = require("../models/home");
 const User = require("../models/user");
 
 exports.getIndex = (req, res) => {
+  console.log("islogidin"+req.session);
   Home.find().then((registerdHomes) => {
     res.render("store/index", {
       registerdHomes: registerdHomes,
       pageTitle: "airbnb home",
       currentPage: "index",
-      isLoggedIn: req.isLoggedIn,
+      isLoggedIn: req.session.isLoggedIn,
       user: req.session.user,
     });
   });

@@ -26,6 +26,32 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 
+app.use(express.urlencoded());
+app.use(
+  session({
+    secret: "this is a airbnb app",
+    resave: false,
+    saveUninitialized: false,
+    store,
+  })
+);
+
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = req.session.isLoggedIn || false;
+  res.locals.user = req.session.user || null;
+  next();
+});
+
+app.use(authRouters);
+app.use(storeRouters);
+app.use("/host", (req, res, next) => {
+  if (req.isLoggedIn) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
+});
+app.use("/host", hostRouter);
 const randomString = (len) =>
   Array.from({ length: len }, () =>
     String.fromCharCode(97 + Math.floor(Math.random() * 26))
@@ -55,36 +81,11 @@ const multerOption = {
   storage,
   fileFilter,
 };
-app.use(express.urlencoded());
+
 app.use(multer(multerOption).single("image"));
 app.use(express.static(path.join(rootDir, "public")));
 app.use('/uploads',express.static(path.join(rootDir, "uploads")));
 app.use('/host/uploads',express.static(path.join(rootDir, "uploads")));
-
-
-app.use(
-  session({
-    secret: "this is a airbnb app",
-    resave: false,
-    saveUninitialized: true,
-    store,
-  })
-);
-app.use((req, res, next) => {
-  console.log(req.get("cookie"));
-  req.isLoggedIn = req.session.isLoggedIn;
-  next();
-});
-app.use(authRouters);
-app.use(storeRouters);
-app.use("/host", (req, res, next) => {
-  if (req.isLoggedIn) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-});
-app.use("/host", hostRouter);
 
 app.use(errorControllers.pageNotFound);
 

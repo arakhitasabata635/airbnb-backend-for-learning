@@ -41,12 +41,14 @@ exports.postLogin = async (req, res) => {
 
   req.session.isLoggedIn = true;
   req.session.user = user;
-  await req.session.save();
+  await req.session.save(() => {
   res.redirect("/");
+});
 };
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy(() => {
+    res.clearCookie("connect.sid");
     res.redirect("/login");
   });
 };
